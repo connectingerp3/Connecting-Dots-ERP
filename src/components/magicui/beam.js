@@ -144,14 +144,14 @@ export function AnimatedBeamDemo() {
           <Circle ref={div1Ref}>
           <img
               alt="Vercel"
-              src="https://res.cloudinary.com/dubeuisom/image/upload/v1756883174/TCS_wordmark_2020_coekk1.webp"
+              src="https://res.cloudinary.com/duz9xipfm/image/upload/v1762153488/TCS_wordmark_2020_coekk1_rkyfry.avif"
               className="h-14 w-14 object-contain"
             />
           </Circle>
           <Circle ref={div5Ref}>
           <img
               alt="Vercel"
-              src="https://res.cloudinary.com/dubeuisom/image/upload/v1756883174/IBM_logo.svg_kwf6kt.png"
+              src="https://res.cloudinary.com/duz9xipfm/image/upload/v1762153311/IBM_logo.svg_kwf6kt_jbwofj.avif"
               className="h-14 w-14 object-contain"
             />
           </Circle>
@@ -170,7 +170,7 @@ export function AnimatedBeamDemo() {
           <Circle ref={div6Ref}>
           <img
               alt="Vercel"
-              src="https://res.cloudinary.com/dubeuisom/image/upload/v1756883174/CTSH-82a8444b_s0dbpx.png"
+              src="https://res.cloudinary.com/duz9xipfm/image/upload/v1762153105/CTSH-82a8444b_s0dbpx_gxn6sj.avif"
               className="h-14 w-14 object-contain"
             />
           </Circle>

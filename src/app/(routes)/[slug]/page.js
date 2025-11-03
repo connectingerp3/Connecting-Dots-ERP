@@ -219,10 +219,6 @@ const CourseCityPage = async ({ params }) => {
   // Generate dynamic content for the page body.
   const dynamicBodyContent = `
     <div class="course-main-content">
-      <!-- These elements now use the global 'visually-hidden' class -->
-      <h1 class="visually-hidden">${course.title} Course in ${city.name}</h1>
-      <h2 class="visually-hidden">Best ${course.fullTitle} Training in ${city.name}</h2>
-      <p class="visually-hidden">${course.description.replace(/{city}/g, city.name)}</p>
       
       <section class="course-summary">
         <h3>About Our ${course.fullTitle} Course</h3>

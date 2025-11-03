@@ -1,208 +1,219 @@
-.carouselWrapper :global(.carousel-control-prev),
-.carouselWrapper :global(.carousel-control-next) {
+/* Optimized HeaderCarousel.module.css */
+:root {
+  --carousel-max-width: 1800px;
+  --primary-gradient: linear-gradient(0deg, #00acee 0%, #027efb 100%);
+  --primary-color: #027efb;
+  --text-dark: #000;
+  --text-muted: #333;
+  --bg-light: #e5e5ed;
+}
+
+/* Base Styles */
+.carouselWrapper :is(.carousel-control-prev, .carousel-control-next) {
   display: none !important;
 }
 
 .carouselWrapper {
   width: 100%;
-  max-width: 1800px;
-  margin: auto;
+  max-width: var(--carousel-max-width);
+  margin: 0 auto;
 }
 
 .carouselIndicators {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
+  width: 100%;
 }
 
-/* slide1 - LCP OPTIMIZED */
 .carouselSlide {
   display: flex;
   align-items: center;
-  height: 580px;
+  min-height: 580px;
   padding: 10px 100px;
-  background-color: #e5e5ed;
-  max-width: 1800px;
+  background-color: var(--bg-light);
+  max-width: var(--carousel-max-width);
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  will-change: transform;
 }
 
 .carouselImage {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   width: 50%;
   height: 50%;
+  contain: layout paint;
 }
 
-/* CRITICAL: Optimized logo strip for LCP */
+/* Logo Strip */
 .logoStrip img {
   height: 130px;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   margin-left: 10px;
-  /* Removed max-width: unset to prevent layout shifts */
+  object-fit: contain;
 }
 
+/* Text Content */
 .carouselText {
   width: 50%;
-  text-align: left;
   padding-right: 20px;
   position: relative;
+  text-align: left;
+  contain: content;
 }
 
 .carouselText h2 {
-  color: #000;
-  margin: 20px 0px;
+  color: var(--text-dark);
+  margin: 20px 0;
   font-size: 22px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .carouselText h3 {
-  color: #333;
+  color: var(--text-muted);
   margin-bottom: 15px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .carouselText p {
   color: #363939;
   margin-bottom: 25px;
+  line-height: 1.5;
 }
 
-.carouselText4 {
-  color: #110626;
-  margin-left: 90px;
-  text-align: top;
-  max-width: 600px;
-}
-
-.carouselText button {
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  z-index: 10;
-  position: relative;
-}
-
-.carouselText .btnSlide {
-  background-color: #3f4041;
-  width: 150px;
-  height: 60px;
-}
-
-/* Custom button - GPU accelerated */
+/* Buttons */
 .buttonBTN {
-  margin: 20px;
+  margin: 20px 0;
+  contain: layout;
 }
 
 .customBtn {
-  width: 230px;
-  height: 40px;
+  --btn-width: 230px;
+  --btn-height: 50px;
+  
+  width: var(--btn-width);
+  height: var(--btn-height);
   color: #fff;
+  border: none;
   border-radius: 5px;
   padding: 0;
   font-weight: 500;
-  background: transparent;
+  background: var(--primary-gradient);
   cursor: pointer;
-  transition: all 0.3s ease;
   position: relative;
   display: inline-flex;
-  line-height: 50%;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-    7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-    4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-  outline: none;
-  /* GPU acceleration */
+  overflow: hidden;
   will-change: transform, opacity;
   transform: translateZ(0);
+  transition: all 0.3s ease;
+  box-shadow: 
+    inset 2px 2px 2px rgba(255, 255, 255, 0.5),
+    7px 7px 20px rgba(0, 0, 0, 0.1),
+    4px 4px 5px rgba(0, 0, 0, 0.1);
 }
 
-.btn3 {
-  background: rgb(0, 172, 238);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 172, 238, 1) 0%,
-    rgba(2, 126, 251, 1) 100%
-  );
-  width: 230px;
-  height: 50px;
-  line-height: 30px;
-  padding: 0;
-  border: none;
-  margin-top: 100px;
-}
-
-.btn3 span {
+.customBtn span {
   position: relative;
   display: block;
   width: 100%;
   height: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.btn3:before,
-.btn3:after {
-  position: absolute;
-  content: "";
-  right: 0;
-  top: 0;
-  background: rgba(2, 126, 251, 1);
   transition: all 0.3s ease;
 }
 
-.btn3:before {
-  height: 0%;
-  width: 2px;
+/* Button Hover Effects */
+.customBtn::before,
+.customBtn::after {
+  content: '';
+  position: absolute;
+  background: var(--primary-color);
+  transition: all 0.3s ease;
+  will-change: transform, opacity;
 }
 
-.btn3:after {
+.customBtn::before {
+  width: 2px;
+  height: 0%;
+  right: 0;
+  top: 0;
+}
+
+.customBtn::after {
   width: 0%;
   height: 2px;
+  right: 0;
+  top: 0;
 }
 
-.btn3:hover {
+.customBtn:hover {
   background: transparent;
   box-shadow: none;
 }
 
-.btn3:hover:before {
+.customBtn:hover::before {
   height: 100%;
 }
 
-.btn3:hover:after {
+.customBtn:hover::after {
   width: 100%;
 }
 
-.btn3 span:hover {
-  color: rgba(2, 126, 251, 1);
-}
-
-.btn3 span:before,
-.btn3 span:after {
+.customBtn span::before,
+.customBtn span::after {
+  content: '';
   position: absolute;
-  content: "";
-  left: 0;
-  bottom: 0;
-  background: rgba(2, 126, 251, 1);
+  background: var(--primary-color);
   transition: all 0.3s ease;
+  will-change: transform, opacity;
 }
 
-.btn3 span:before {
+.customBtn span::before {
   width: 2px;
   height: 0%;
+  left: 0;
+  bottom: 0;
 }
 
-.btn3 span:after {
+.customBtn:hover span::before {
+  height: 100%;
+}
+
+.customBtn span::after {
   width: 0%;
   height: 2px;
+  left: 0;
+  bottom: 0;
+}
+
+.customBtn:hover span::after {
+  width: 100%;
+}
+
+/* Slide-specific styles */
+.carouselText4 {
+  color: #110626;
+  margin-left: 90px;
+  max-width: 600px;
+}
+
+/* Slide buttons */
+.slide2Btn {
+  width: 210px;
+  height: 40px;
+  margin-left: 30px;
+  color: #fff;
+  /* Add your slide button styles here */
 }
 
 .btn3 span:hover:before {

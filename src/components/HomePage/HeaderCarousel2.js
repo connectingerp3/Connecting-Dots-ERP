@@ -38,14 +38,14 @@ const CareerMentorsComponent = () => {
       mentors: 6, 
       experience: '13+',
       color: '#1f2937',
-      logo: 'https://res.cloudinary.com/dubeuisom/image/upload/v1756974571/DOX-148df523_n8rgrn.png'
+      logo: 'https://res.cloudinary.com/duz9xipfm/image/upload/v1762153226/DOX-148df523_n8rgrn_hffbit.avif'
     },
     { 
       name: 'Meta', 
       mentors: 7, 
       experience: '9+',
       color: '#1d4ed8',
-      logo: 'https://res.cloudinary.com/dubeuisom/image/upload/v1756883174/CTSH-82a8444b_s0dbpx.png'
+      logo: 'https://res.cloudinary.com/duz9xipfm/image/upload/v1762153105/CTSH-82a8444b_s0dbpx_gxn6sj.avif'
     },
     { 
       name: 'Netflix', 
@@ -73,7 +73,7 @@ const CareerMentorsComponent = () => {
       mentors: 8, 
       experience: '11+',
       color: '#b91c1c',
-      logo: 'https://res.cloudinary.com/dubeuisom/image/upload/v1756883174/TCS_wordmark_2020_coekk1.webp'
+      logo: 'https://res.cloudinary.com/duz9xipfm/image/upload/v1762153488/TCS_wordmark_2020_coekk1_rkyfry.avif'
     },
     { 
       name: 'Salesforce', 
