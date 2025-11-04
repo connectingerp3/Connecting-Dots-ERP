@@ -80,6 +80,7 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#1a365d" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msvalidate.01" content="9ACF89BD41333B26F8C154D46FDD8E5D" />
       </head>
 
       <body className={`body bg-black ${lato.className} ${rubik.className}`}>

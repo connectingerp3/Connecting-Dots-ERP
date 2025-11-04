@@ -262,6 +262,9 @@ setTimeout(() => {
                                     width={32}
                                     height={32}
                                     className="w-full h-full object-cover rounded-full"
+                                    unoptimized={process.env.NODE_ENV !== 'production'}
+                                    priority={index < 3} // Load first 3 images with priority
+                                    loading={index < 3 ? 'eager' : 'lazy'}
                                   />
                                 ) : (
                                   <span className="text-lg text-white">{card.icon}</span>
