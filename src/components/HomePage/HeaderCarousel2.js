@@ -387,7 +387,7 @@ const CareerMentorsComponent = () => {
   }, [animationState, companies, getLogoPosition]);
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden flex">
+    <div className="relative w-full min-h-* overflow-hidden flex">
 
       <div
   className="
@@ -428,10 +428,10 @@ const CareerMentorsComponent = () => {
         {/* Mobile Layout */}
         {isMobile && (
           
-          <div className="space-y-2 sm:space-y-4 md:space-y-6 pb-12 overflow-visible min-h-[600px]">
+          <div className="space-y-2 sm:space-y-4 md:space-y-6 pb-12 overflow-visible min-h-[600px] z-50">
             <div className="text-center px-5 mt-12 ">
               <div className="relative inline-block">
-                <h2 className="text-2xl sm:text-3xl font-black leading-tight text-gray-800">
+                <h2 className="text-2xl sm:text-3xl font-black leading-tight text-gray-800 z-50">
                   <span className="text-black sm:text-white">Professional </span>
                   <span className="text-gray-800 sm:text-[#8dacbb]">SAP & IT </span>
                   <span className="text-black sm:text-white">Training Institute</span>
@@ -442,12 +442,12 @@ const CareerMentorsComponent = () => {
                 </div>
               </div>
               
-              <p className="text-sm sm:text-base text-black leading-relaxed mt-0 mb-0">
+              <p className="text-sm sm:text-base text-black leading-relaxed mt-0 mb-0 z-50">
                 From <span className="font-bold text-blue-600">Industry Experts</span>
               </p>
             </div>
 
-            <div className="w-full max-w-lg">
+            <div className="w-full max-w-lg z-50">
                 <AnimatedBeamDemo />
               </div>
 
@@ -460,7 +460,7 @@ const CareerMentorsComponent = () => {
                 className="sm:hidden absolute top-0 right-1 w-full"
                 viewBox="0 0 1440 100"
                 preserveAspectRatio="none"
-                style={{ height: '87%', width: '250%', transform: 'rotate(-45deg)', transformOrigin: 'top left' }}
+                style={{ height: '80%', width: '250%', transform: 'rotate(-45deg)', transformOrigin: 'top left' }}
               >
                 <path
                   d="M0,0 L1440,0 L1440,100 L0,100 Z"
@@ -472,7 +472,7 @@ const CareerMentorsComponent = () => {
                 className="sm:hidden absolute top-50 right-1 w-full"
                 viewBox="0 0 1440 100"
                 preserveAspectRatio="none"
-                style={{ height: '0.5%', width: '135%', transform: 'rotate(-45deg)', transformOrigin: 'top left' }}
+                style={{ height: '0.5%', width: '137%', transform: 'rotate(-45deg)', transformOrigin: 'top left' }}
               >
                 <path
                   d="M0,0 L1440,0 L1440,100 L0,100 Z"
@@ -511,6 +511,32 @@ const CareerMentorsComponent = () => {
                 <path
                   d="M0,0 L1440,0 L1440,100 L0,100 Z"
                   fill="#182E4A"
+                />
+              </svg>
+
+              {/* Desktop - Top wave (hidden on mobile) */}
+              <svg
+                className="hidden sm:block absolute bottom-50 left-0 w-full"
+                viewBox="0 0 1440 800"
+                preserveAspectRatio="none"
+                style={{ height: '58%', rotate: '180deg' }}
+              >
+                <path
+                  d="M0,900 L300,900 Q500,750 700,550 Q900,400 1100,480 Q1300,560 1440,450 L1440,900 Z"
+                  fill="#ffffff"
+                />
+              </svg>
+
+              {/* Desktop - Bottom wave (hidden on mobile) */}
+              <svg
+                className="hidden sm:block absolute bottom-0 left-0 w-full"
+                viewBox="0 0 1440 800"
+                preserveAspectRatio="none"
+                style={{ height: '58%' }}
+              >
+                <path
+                  d="M0,0 L300,0 Q500,150 700,350 Q900,500 1100,420 Q1300,340 1440,450 L1440,0 Z"
+                  fill="#ffffff"
                 />
               </svg>
 

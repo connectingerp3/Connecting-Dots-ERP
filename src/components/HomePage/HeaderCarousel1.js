@@ -23,7 +23,7 @@ const CareerHeroSlide = ({ onOpenForm }) => {
           className="sm:hidden absolute top-0 right-1 w-full"
           viewBox="0 0 1440 100"
           preserveAspectRatio="none"
-          style={{ height: '87%', width: '250%', transform: 'rotate(-45deg)', transformOrigin: 'top left'}}
+          style={{ height: '80%', width: '250%', transform: 'rotate(-45deg)', transformOrigin: 'top left'}}
         >
           <path
             d="M0,0 L1440,0 L1440,100 L0,100 Z"
@@ -35,7 +35,7 @@ const CareerHeroSlide = ({ onOpenForm }) => {
           className="sm:hidden absolute top-50 right-1 w-full"
           viewBox="0 0 1440 100"
           preserveAspectRatio="none"
-          style={{ height: '0.5%', width: '135%', transform: 'rotate(-45deg)', transformOrigin: 'top left'}}
+          style={{ height: '0.5%', width: '137%', transform: 'rotate(-45deg)', transformOrigin: 'top left'}}
         >
           <path
             d="M0,0 L1440,0 L1440,100 L0,100 Z"
