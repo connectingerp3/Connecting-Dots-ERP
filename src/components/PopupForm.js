@@ -903,7 +903,7 @@ const PopupForm = ({ onSubmitData }) => {
                 <span className={styles.buttonLoader}></span>
               </>
             ) : (
-              "Register"
+              "Register "
             )}
           </button>
         </form>
