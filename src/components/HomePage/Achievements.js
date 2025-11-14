@@ -38,7 +38,9 @@ export default function Achievement() {
       baseX: -35,
       baseY: 5,
       depth: 1,
-      colorType: 'psychedelic'
+      colorType: 'psychedelic',
+      width: 145,
+      height: 185
     },
     {
       id: 2,
@@ -47,7 +49,9 @@ export default function Achievement() {
       baseX: -10,
       baseY: -8,
       depth: 2,
-      colorType: 'urban'
+      colorType: 'urban',
+      width: 145,
+      height: 185
     },
     {
       id: 3,
@@ -60,7 +64,9 @@ export default function Achievement() {
       baseX: 15,
       baseY: -3,
       depth: 3,
-      hasText: true
+      hasText: true,
+      width: 145,
+      height: 185
     },
     {
       id: 4,
@@ -70,7 +76,9 @@ export default function Achievement() {
       baseX: 40,
       baseY: 2,
       depth: 4,
-      colorType: 'digital'
+      colorType: 'digital',
+      width: 145,
+      height: 185
     }
   ];
 
@@ -80,25 +88,33 @@ export default function Achievement() {
       id: 5,
       image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238242/19_uoxzch.avif',
       title: '',
-      colorType: 'neon'
+      colorType: 'neon',
+      width: 145,
+      height: 185
     },
     {
       id: 6,
       image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238241/4_tsc75p.avif',
       title: '',
-      colorType: 'psychedelic'
+      colorType: 'psychedelic',
+      width: 145,
+      height: 185
     },
     {
       id: 7,
       image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238241/5_cxz9yx.avif',
       title: '',
-      colorType: ''
+      colorType: '',
+      width: 145,
+      height: 185
     },
     {
       id: 8,
       image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238241/14_ygoxic.avif',
       title: '',
-      colorType: 'digital'
+      colorType: 'digital',
+      width: 145,
+      height: 185
     }
   ];
 
@@ -118,10 +134,15 @@ export default function Achievement() {
     };
   };
 
-  const CardComponent = ({ card, isScrolling = false, imageClass = 'object-contain', imageStyle = {}, highlightBottom = false }) => (
-    <div className={`${isScrolling ? 'flex-shrink-0 w-[220px]' : 'w-full h-full'} relative`}>
-      <div className={`${isScrolling ? 'h-[300px]' : 'absolute inset-0'} bg-white rounded-sm`} style={!isScrolling ? { transform: 'translateZ(-2px)' } : {}}>
-        <div className="absolute inset-2 rounded-sm overflow-hidden bg-black">
+  const CardComponent = ({ card, isScrolling = false, imageClass = 'object-contain', imageStyle = {}, highlightBottom = false }) => {
+    const cardWidth = card.width || 145;
+    const cardHeight = card.height || 185;
+    
+    return (
+      <div className={`${isScrolling ? 'flex-shrink-0' : 'w-full h-full'} relative`} style={isScrolling ? { width: `${cardWidth}px` } : {}}>
+        <div className={`${isScrolling ? '' : 'absolute inset-0'} rounded-sm relative`} style={isScrolling ? { height: `${cardHeight}px` } : { transform: 'translateZ(-2px)' }}>
+          {/* Image container */}
+          <div className="absolute rounded-sm overflow-hidden bg-black" style={{ inset: '7px' }}>
           <img 
             src={card.image}
             alt={card.title || 'Card'}
@@ -182,9 +203,69 @@ export default function Achievement() {
             </div>
           )}
         </div>
+        
+        {/* Double-line border with curved corner decorations - ON TOP */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 10 }}>
+          {/* Outer border line */}
+          <div className="absolute inset-0 border-[3px] border-white"></div>
+          
+          {/* Inner border line */}
+          <div className="absolute border-[2px] border-white" style={{ inset: '6px' }}></div>
+          
+          {/* Top-left corner - Two curved arcs */}
+          <div className="absolute top-0 left-0" style={{ width: '80px', height: '80px' }}>
+            <svg width="80" height="80" viewBox="0 0 80 80" className="absolute top-0 left-0">
+              {/* Outer curved arc */}
+              <path 
+                d="M 3 50 Q 3 3, 50 3" 
+                stroke="white" 
+                strokeWidth="3" 
+                fill="none" 
+                strokeLinecap="round"
+              />
+              {/* Inner curved arc */}
+              <path 
+                d="M 9 45 Q 9 9, 45 9" 
+                stroke="white" 
+                strokeWidth="2" 
+                fill="none" 
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+          
+          {/* Bottom-right corner - Two curved arcs */}
+          <div className="absolute bottom-0 right-0" style={{ width: '80px', height: '80px' }}>
+            <svg width="80" height="80" viewBox="0 0 80 80" className="absolute bottom-0 right-0">
+              {/* Outer curved arc */}
+              <path 
+                d="M 77 30 Q 77 77, 30 77" 
+                stroke="white" 
+                strokeWidth="3" 
+                fill="none" 
+                strokeLinecap="round"
+              />
+              {/* Inner curved arc */}
+              <path 
+                d="M 71 35 Q 71 71, 35 71" 
+                stroke="white" 
+                strokeWidth="2" 
+                fill="none" 
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+          
+          {/* Subtle animated gradient overlay */}
+          <div className="absolute inset-0 pointer-events-none animate-gradient-sweep" style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.06) 25%, rgba(236, 72, 153, 0.06) 50%, rgba(168, 85, 247, 0.06) 75%, transparent 100%)',
+            backgroundSize: '200% 100%'
+          }}></div>
+        </div>
       </div>
     </div>
-  );
+    );
+  };
 
   return (
     <div className="w-full max-w-full bg-black relative overflow-hidden" ref={containerRef}>
@@ -226,8 +307,8 @@ export default function Achievement() {
                 key={card.id}
                 className="absolute top-1/2 left-1/2 transition-all duration-100 ease-out cursor-pointer"
                 style={{
-                  width: '200px',
-                  height: '250px',
+                  width: `${card.width}px`,
+                  height: `${card.height}px`,
                   transformStyle: 'preserve-3d',
                   ...getCardTransform(card)
                 }}
@@ -245,9 +326,9 @@ export default function Achievement() {
 
           <div className="w-full space-y-6">
             {/* Row 1 */}
-            <div className="flex gap-6 animate-scroll-right whitespace-nowrap" style={{ animationDelay: '1s' }}>
-              {[...scrollingCards, ...scrollingCards].map((card, idx) => (
-                <div key={`row3-${idx}`} className="inline-block">
+            <div className="flex gap-6 animate-scroll-right whitespace-nowrap">
+              {[...scrollingCards, ...scrollingCards, ...scrollingCards].map((card, idx) => (
+                <div key={`row1-${idx}`} className="inline-block">
                   <CardComponent card={card} isScrolling />
                 </div>
               ))}
@@ -255,7 +336,7 @@ export default function Achievement() {
 
             {/* Row 2 */}
             <div className="flex gap-6 animate-scroll-left whitespace-nowrap">
-              {[...scrollingCards, ...scrollingCards].reverse().map((card, idx) => (
+              {[...scrollingCards, ...scrollingCards, ...scrollingCards].map((card, idx) => (
                 <div key={`row2-${idx}`} className="inline-block">
                   <CardComponent card={card} isScrolling />
                 </div>
@@ -263,8 +344,8 @@ export default function Achievement() {
             </div>
 
             {/* Row 3 */}
-            <div className="flex gap-6 animate-scroll-right whitespace-nowrap" style={{ animationDelay: '1s' }}>
-              {[...scrollingCards, ...scrollingCards].map((card, idx) => (
+            <div className="flex gap-6 animate-scroll-right whitespace-nowrap">
+              {[...scrollingCards, ...scrollingCards, ...scrollingCards].map((card, idx) => (
                 <div key={`row3-${idx}`} className="inline-block">
                   <CardComponent card={card} isScrolling />
                 </div>
@@ -281,21 +362,67 @@ export default function Achievement() {
         }
         
         @keyframes scroll-right {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0%); }
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-33.333%); }
         }
         
         @keyframes scroll-left {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-100%); }
+          0% { transform: translateX(-33.333%); }
+          100% { transform: translateX(0%); }
+        }
+        
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes gradient-sweep {
+          0% { background-position: -200% 0%; }
+          100% { background-position: 200% 0%; }
+        }
+        
+        @keyframes white-glow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.95; }
+        }
+        
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; }
+        }
+        
+        @keyframes shimmer-elegant {
+          0% { background-position: -200% 0%; }
+          100% { background-position: 200% 0%; }
         }
         
         .animate-scroll-right {
-          animation: scroll-right 30s linear infinite;
+          animation: scroll-right 15s linear infinite;
         }
         
         .animate-scroll-left {
-          animation: scroll-left 30s linear infinite;
+          animation: scroll-left 15s linear infinite;
+        }
+        
+        .animate-gradient-shift {
+          animation: gradient-shift 4s ease-in-out infinite;
+        }
+        
+        .animate-gradient-sweep {
+          animation: gradient-sweep 3s linear infinite;
+        }
+        
+        .animate-white-glow {
+          animation: white-glow 2s ease-in-out infinite;
+        }
+        
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
+        }
+        
+        .animate-shimmer-elegant {
+          animation: shimmer-elegant 2.5s linear infinite;
         }
       `}</style>
     </div>
