@@ -32,13 +32,8 @@ const TrustUs = () => {
   return (
     <div className="relative w-full max-w-[1800px] mx-auto overflow-hidden">
     <div
-      className="relative w-full object-cover max-w-8xl bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-6 sm:py-8 md:py-12"
-      style={{
-        backgroundImage: `url('https://res.cloudinary.com/dujw4np0d/image/upload/v1751885009/.bg_tpqc0t.jpg')`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
+      className="relative w-full object-cover max-w-8xl bg-white dotted-bg py-6 sm:py-8 md:py-12"
+      
     >
       <style jsx>{`
         @keyframes marqueeUp {

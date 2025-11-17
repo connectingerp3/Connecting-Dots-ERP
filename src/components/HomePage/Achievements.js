@@ -31,7 +31,7 @@ export default function Achievement() {
   const cards = [
     {
       id: 1,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238242/6_vhmpvb.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379290/6_echnpc.avif',
       title: '',
       subtitle: '',
       baseRotation: -12,
@@ -44,7 +44,7 @@ export default function Achievement() {
     },
     {
       id: 2,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238242/7_jtslft.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379290/13_ipzdbu.avif',
       baseRotation: 3,
       baseX: -10,
       baseY: -8,
@@ -55,7 +55,7 @@ export default function Achievement() {
     },
     {
       id: 3,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238242/13_gjhutl.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379290/7_gzvtwh.avif',
       title: '',
       subtitle: '',
       text: '',
@@ -70,7 +70,7 @@ export default function Achievement() {
     },
     {
       id: 4,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238497/17_wbgza8.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379289/5_lvesok.avif',
       title: '',
       baseRotation: -5,
       baseX: 40,
@@ -86,7 +86,7 @@ export default function Achievement() {
     ...cards,
     {
       id: 5,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238242/19_uoxzch.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379289/4_ij6jsw.avif',
       title: '',
       colorType: 'neon',
       width: 145,
@@ -94,7 +94,7 @@ export default function Achievement() {
     },
     {
       id: 6,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238241/4_tsc75p.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379289/19_szap9h.avif',
       title: '',
       colorType: 'psychedelic',
       width: 145,
@@ -102,7 +102,7 @@ export default function Achievement() {
     },
     {
       id: 7,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238241/5_cxz9yx.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379289/14_rgeodm.avif',
       title: '',
       colorType: '',
       width: 145,
@@ -110,7 +110,7 @@ export default function Achievement() {
     },
     {
       id: 8,
-      image: 'https://res.cloudinary.com/dujw4np0d/image/upload/v1762238241/14_ygoxic.avif',
+      image: 'https://res.cloudinary.com/dwlw1nykn/image/upload/v1763379289/17_tpeu9r.avif',
       title: '',
       colorType: 'digital',
       width: 145,
