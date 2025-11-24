@@ -6926,7 +6926,7 @@ export const citySpecificMeta = {
     }
   },
 
-  "it-course": {
+  "it": {
     "pune": {
       "title": "Pune IT Course for Advanced Career Skills",
       "description": "Enhance your technical expertise in Pune with an IT Course that strengthens digital abilities, practical problem-solving, and future-ready competence."
@@ -8203,7 +8203,7 @@ export const citySpecificMeta = {
 
   "sap": {
     "pune": {
-      "title": "SAP Course for Skill Enhancement in Pune",
+      "title": "SAP Course in Pune | Best SAP Training with Placement",
       "description": "Advance your professional capabilities in Pune with a SAP Course that builds expertise, strengthens analytical skills, and supports long-term growth."
     },
     "mumbai": {
