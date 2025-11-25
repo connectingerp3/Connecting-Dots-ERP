@@ -34,13 +34,8 @@ const GTM_ID = "GTM-MB68QM2V";
 const FB_PIXEL_ID = "3414178115554916";
 const AHREFS_KEY = "WOZUDfvp1qo7lg62bQYt0g";
 
-// --- Metadata ---
+// Verification metadata (kept here as it's typically site-wide)
 export const metadata = {
-  title: {
-    default: "Connecting Dots ERP | SAP Training Institute",
-  },
-  description:
-    "Expert-led training in SAP, Software Development, Digital Marketing, and HR Courses with strong placement support for your career.",
   verification: {
     google: "KRKFsO9AAW2a8qImif8Wj4uzzjmWGA0R6o7IZFJcmPo",
     other: {

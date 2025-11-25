@@ -1,80 +1,68 @@
-'use client';
+// app/page.js  (server component)
+import HomeClient from "./HomeClient"; // client UI component
 
-// Note: Metadata has been moved to metadata.js for better separation
-// and to avoid conflicts with client-side components
-import dynamic from "next/dynamic";
-import LazyHydrate from 'react-lazy-hydration';
+export const metadata = {
+  title: "Connecting Dots ERP | SAP Training, HR Courses & IT Skill Development",
+  description:
+    "Join Connecting Dots ERP – Pune & Mumbai's leading institute for SAP training, HR certification programs, IT courses, placement support, and hands-on learning from industry experts.",
+  keywords: [
+    "SAP Certification Courses",
+    "SAP Course",
+    "Data Science Course",
+    "Power Bi Course",
+    "Digital Marketing Course",
+    "HR Training Institute",
+    "SAP Training Institute",
+    "Python Course",
+    "Software Course",
+    "Training",
+    "Education",
+  ],
+  author: "Connecting Dots ERP | Software and SAP Training Institute",
+  robots: "index, follow",
+  alternates: {
+    canonical: "https://connectingdotserp.com/",
+    languages: {
+      "en-IN": "https://connectingdotserp.com/",
+      "x-default": "https://connectingdotserp.com/",
+    },
+  },
+  openGraph: {
+    title: "Connecting Dots ERP | SAP, HR & IT Training Institute",
+    description:
+      "Upgrade your career with SAP training, HR courses, IT programs, and job-oriented certifications at Connecting Dots ERP. Classroom & online batches available.",
+    url: "https://connectingdotserp.com/",
+    siteName: "Connecting Dots ERP",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "https://connectingdotserp.com/Navbar/logo.webp",
+        width: 981,
+        height: 420,
+        alt: "Connecting Dots ERP Institute",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@CD_ERP",
+    creator: "@CD_ERP",
+    title: "Connecting Dots ERP | SAP, HR & IT Training Institute",
+    description:
+      "Learn SAP, HR and IT courses with expert trainers, real-time projects and 100% placement support at Connecting Dots ERP.",
+    images: ["https://connectingdotserp.com/Navbar/logo.webp"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
+  },
+};
 
-// --- Critical & Dynamic Component Imports ---
-// Critical above-the-fold component - load immediately
-import HeaderCarousel from "@/components/HomePage/HeaderCarousel";
-
-// Lazy load below-the-fold components for better performance
-const Marquee = dynamic(() => import("@/components/HomePage/Marquee2"), {
-  ssr: false,
-  loading: () => <div style={{ height: "60px" }} />,
-});
-
-const Chevron = dynamic(() => import("@/components/HomePage/Chevron"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "100px" }} />,
-});
-
-const Keypoints = dynamic(() => import("@/components/HomePage/Keypoints"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "300px" }} />,
-});
-
-const OurClients = dynamic(() => import("@/components/HomePage/OurClients"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "200px" }} />,
-});
-
-const PlacementSection = dynamic(
-  () => import("@/components/HomePage/PlacementSection"),
-  {
-    ssr: false,
-    loading: () => <div style={{ minHeight: "400px" }} />,
-  }
-);
-
-const OurStats = dynamic(() => import("@/components/HomePage/OurStats"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "250px" }} />,
-});
-
-const Achievements = dynamic(
-  () => import("@/components/HomePage/Achievements"),
-  {
-    ssr: false,
-    loading: () => <div style={{ minHeight: "300px" }} />,
-  }
-);
-
-const FeedbackAndReviews = dynamic(
-  () => import("@/components/HomePage/FeedbackandReviews"),
-  {
-    ssr: false,
-    loading: () => <div style={{ minHeight: "400px" }} />,
-  }
-);
-
-const DemoCertificate = dynamic(() => import("@/components/HomePage/DemoCertificate"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "300px" }} />,
-});
-
-const Branches = dynamic(() => import("@/components/HomePage/Branches"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "350px" }} />,
-});
-
-const Courses = dynamic(() => import("@/components/HomePage/PopCourses"), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: "400px" }} />,
-});
-
-// JSON-LD data for structured data
+// JSON-LD structured data (server-rendered so visible to crawlers / View Source)
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -138,15 +126,8 @@ const jsonLd = {
         longitude: "73.78137250928907",
       },
       foundingDate: "2013",
-      founder: {
-        "@type": "Person",
-        name: "Nitendra Singh",
-      },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.7",
-        reviewCount: "185",
-      },
+      founder: { "@type": "Person", name: "Nitendra Singh" },
+      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.7", reviewCount: "185" },
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -159,12 +140,10 @@ const jsonLd = {
       "@id": "https://connectingdotserp.com/#product",
       name: "SAP Course",
       description: "Comprehensive SAP covering all modules.",
-      image: "https://res.cloudinary.com/dubeuisom/image/upload/v1758623118/sap_5_o5zehc.png",
+      image:
+        "https://res.cloudinary.com/dubeuisom/image/upload/v1758623118/sap_5_o5zehc.png",
       url: "https://connectingdotserp.com/",
-      brand: {
-        "@type": "Brand",
-        name: "Connecting Dots ERP",
-      },
+      brand: { "@type": "Brand", name: "Connecting Dots ERP" },
       offers: {
         "@type": "Offer",
         price: "75000",
@@ -177,13 +156,8 @@ const jsonLd = {
       "@type": "Course",
       "@id": "https://connectingdotserp.com/#course",
       name: "SAP Course",
-      description:
-        "Comprehensive SAP with modules designed to help you master SAP systems.",
-      provider: {
-        "@type": "Organization",
-        name: "Connecting Dots ERP",
-        url: "https://connectingdotserp.com/",
-      },
+      description: "Comprehensive SAP with modules designed to help you master SAP systems.",
+      provider: { "@type": "Organization", name: "Connecting Dots ERP", url: "https://connectingdotserp.com/" },
     },
     {
       "@type": "VideoObject",
@@ -194,11 +168,9 @@ const jsonLd = {
       embedUrl: "https://youtu.be/7YRbfuv7R3k?si=cqdu5buZ-Ya_-O8R",
       uploadDate: "2025-04-03",
       duration: "PT5M",
-      thumbnailUrl: "https://res.cloudinary.com/dubeuisom/image/upload/v1758623118/sap_5_o5zehc.png",
-      publisher: {
-        "@type": "Organization",
-        name: "Connecting Dots ERP",
-      },
+      thumbnailUrl:
+        "https://res.cloudinary.com/dubeuisom/image/upload/v1758623118/sap_5_o5zehc.png",
+      publisher: { "@type": "Organization", name: "Connecting Dots ERP" },
     },
     {
       "@type": "SpecialAnnouncement",
@@ -208,9 +180,7 @@ const jsonLd = {
       url: "https://connectingdotserp.com/",
       datePosted: "2025-06-10",
       expires: "2025-12-31",
-      publisher: {
-        "@id": "https://connectingdotserp.com/#organization",
-      },
+      publisher: { "@id": "https://connectingdotserp.com/#organization" },
       announcementLocation: {
         "@type": "Place",
         "@id": "https://connectingdotserp.com/pune/#localbusiness",
@@ -219,51 +189,18 @@ const jsonLd = {
   ],
 };
 
-export default function HomePage() {
+export default function Page() {
   return (
     <>
+      {/* Inline JSON-LD in server page so it's visible to crawlers / View Page Source */}
       <script
         type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Main Page Content */}
-      <main className="flex-col justify-center">
-        <h1 className="visually-hidden">
-          Professional SAP & IT Training Institute
-        </h1>
-        {/* Above the fold - critical content */}
-        <HeaderCarousel />
-        <Marquee />
-        
-        
-          <Chevron />
-        
-          <OurClients />
-        
-          <Keypoints />
-
-          <Courses />
-        
-          <PlacementSection />
-        
-          <OurStats />
-        
-          
-      <Achievements 
-        grayscale={false}
-        overlayBlurColor="transparent"
-        segments={24}
-        fit={0.5}
-      />
-    
-        
-          <FeedbackAndReviews />
-        
-          <DemoCertificate />
-        
-          <Branches />
-      </main>
+      {/* Render client-side home UI (HomeClient uses 'use client' and dynamic imports) */}
+      <HomeClient />
     </>
   );
 }
