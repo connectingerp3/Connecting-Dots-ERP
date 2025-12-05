@@ -276,7 +276,7 @@ const CourseCityPage = async ({ params }) => {
             as="video"
             href={headerData.backgroundVideo}
             type="video/mp4"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         )}
         {headerData?.backgroundPoster && (
@@ -284,7 +284,7 @@ const CourseCityPage = async ({ params }) => {
             rel="preload"
             as="image"
             href={headerData.backgroundPoster}
-            fetchpriority="high"
+            fetchPriority="high"
             // poster is often an image; let browser pick type
           />
         )}
@@ -334,7 +334,7 @@ const CourseCityPage = async ({ params }) => {
           as="video"
           href={headerData.backgroundVideo}
           type="video/mp4"
-          fetchpriority="high"
+          fetchPriority="high"
         />
       )}
       {headerData?.backgroundPoster && (
@@ -342,7 +342,7 @@ const CourseCityPage = async ({ params }) => {
           rel="preload"
           as="image"
           href={headerData.backgroundPoster}
-          fetchpriority="high"
+          fetchPriority="high"
         />
       )}
 
