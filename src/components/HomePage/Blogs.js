@@ -217,7 +217,6 @@ const LatestBlogs = () => {
           <div className={styles.sectionHeading}>
         <h2>Read our Latest Blogs</h2>
         <div className={styles.titleUnderline}></div>
-        <p>Our alumni are making remarkable strides in top organizations</p>
       </div>
         </div>
 
