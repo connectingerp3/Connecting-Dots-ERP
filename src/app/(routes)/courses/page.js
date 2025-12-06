@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronDown, ChevronUp, Smartphone, Brain, MessageCircle, Menu, X, BookOpen, GraduationCap, Filter, Search, ArrowRight } from 'lucide-react';
 import Card from '@/components/BlogsPage/ui/Card';
 import InterviewCard from '@/components/interviewCard';
@@ -48,13 +48,13 @@ const BlogPage = () => {
     fetchBlogs(true, course);
   };
 
-  // Updated fetchBlogs function to work with your backend
-  const fetchBlogs = async (reset = false, category = selectedCourse, searchTerm = searchQuery) => {
+  // Updated fetchBlogs function with improved pagination
+  const fetchBlogs = async (reset = false, category = selectedCourse) => {
     const targetLoading = reset ? setLoading : setLoadingMore;
     targetLoading(true);
     
     try {
-      const skip = reset ? 0 : currentPage * 8;
+      const skip = reset ? 0 : blogs.length; // Use current length for pagination
       const limit = 8;
       
       // Build query parameters
@@ -68,7 +68,7 @@ const BlogPage = () => {
         params.append('category', category);
       }
       
-      console.log('Fetching blogs from:', `${API_BASE_URL}/api/blogs?${params}`);
+      console.log(`Fetching blogs - Skip: ${skip}, Limit: ${limit}, Category: ${category}`);
       
       const response = await fetch(`${API_BASE_URL}/api/blogs?${params}`);
       
@@ -79,9 +79,6 @@ const BlogPage = () => {
       }
       
       const responseData = await response.json();
-      console.log('API Response:', responseData);
-      
-      // Handle the backend response structure: {blogs: [...], hasMore: boolean}
       const blogsData = responseData.blogs || [];
       const hasMoreData = responseData.hasMore || false;
       
@@ -93,8 +90,11 @@ const BlogPage = () => {
           ? blog.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' 
           : 'No content available';
           
+        const uniqueId = blog._id ? blog._id : `blog-${Date.now()}-${skip + index}`;
+          
         return {
-          id: blog._id,
+          id: uniqueId,
+          _id: blog._id,
           title: blog.title,
           description: description,
           excerpt: blog.excerpt || description,
@@ -105,16 +105,35 @@ const BlogPage = () => {
           author: blog.author || 'Admin',
           slug: blog.slug || blog.title?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
           createdAt: blog.createdAt,
-          bgColor: "bg-gradient-to-br from-blue-500 to-blue-600" // You can randomize this
+          bgColor: "bg-gradient-to-br from-blue-500 to-blue-600"
         };
       });
 
+      // Update state based on reset or load more
       if (reset) {
         setBlogs(transformedBlogs);
         setCurrentPage(1);
       } else {
-        setBlogs(prev => [...prev, ...transformedBlogs]);
-        setCurrentPage(prev => prev + 1);
+        setBlogs(prev => {
+          // Create a map of existing blogs by ID for quick lookup
+          const blogMap = new Map();
+          
+          // Add all existing blogs to the map
+          prev.forEach(blog => {
+            const id = blog._id || blog.id;
+            if (id) blogMap.set(id, blog);
+          });
+          
+          // Add new blogs, which will overwrite any duplicates by ID
+          transformedBlogs.forEach(blog => {
+            const id = blog._id || blog.id;
+            if (id) blogMap.set(id, blog);
+          });
+          
+          const mergedBlogs = Array.from(blogMap.values());
+          console.log(`Merged ${prev.length} existing with ${transformedBlogs.length} new = ${mergedBlogs.length} total`);
+          return mergedBlogs;
+        });
       }
       
       setHasMore(hasMoreData);
@@ -156,11 +175,12 @@ const BlogPage = () => {
   };
 
   // Load more blogs function for infinite scroll
-  const loadMoreBlogs = () => {
+  const loadMoreBlogs = useCallback(() => {
     if (!loadingMore && hasMore) {
+      console.log('Loading more blogs...');
       fetchBlogs(false);
     }
-  };
+  }, [hasMore, loadingMore, fetchBlogs]);
 
   // Initial load
   useEffect(() => {
@@ -234,23 +254,30 @@ const BlogPage = () => {
     (searchQuery === '' || (q.question && q.question.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
-  // Infinite scroll handler
+  // Infinite scroll handler with improved scroll detection
   useEffect(() => {
     const handleScroll = () => {
+      // Check if we're near the bottom of the page
       if (
         window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 1000 &&
-        hasMore &&
+        document.documentElement.offsetHeight - 1000 && 
+        hasMore && 
         !loadingMore &&
         activeSection === 'blogs'
       ) {
+        console.log('Scrolled to load more position');
         loadMoreBlogs();
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasMore, loadingMore, activeSection]);
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('scroll', handleScroll, { passive: true });
+    };
+  }, [hasMore, loadingMore, activeSection, loadMoreBlogs]);
 
   const EnhancedSidebar = ({ isMobile = false }) => {
     return (
@@ -434,9 +461,9 @@ const BlogPage = () => {
           {activeSection === 'blogs' ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredBlogs.map((blog) => (
+                {filteredBlogs.map((blog, index) => (
                   <div 
-                    key={blog.id}
+                    key={`${blog.id}-${index}`}
                     className="relative transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[0.96]"
                   >
                     <Card

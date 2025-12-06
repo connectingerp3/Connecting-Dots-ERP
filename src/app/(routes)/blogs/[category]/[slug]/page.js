@@ -48,6 +48,28 @@ export default function BlogPost({ params }) {
   
   const locationInputRef = useRef(null);
   const suggestionsRef = useRef(null);
+
+  // Function to scroll to a heading when TOC item is clicked
+  const scrollToHeading = (id) => {
+    if (!id) return;
+    
+    const element = document.getElementById(id);
+    if (element) {
+      // Close the mobile TOC if open
+      setShowToc(false);
+      
+      // Scroll to the element with some offset for the header
+      const yOffset = -80; // Adjust this value based on your header height
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      
+      // Update the active ID after a small delay to ensure smooth scrolling
+      setTimeout(() => {
+        setActiveId(id);
+      }, 300);
+    }
+  };
   const [isScrolled, setIsScrolled] = useState(false);
   const tocRef = useRef(null);
   const bannerRef = useRef(null);
@@ -57,73 +79,87 @@ export default function BlogPost({ params }) {
   const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5002';
 
   // Helper function to build TOC tree
-  const buildTocTree = (headings) => {
-    const tree = [];
-    const stack = [];
+  // Helper function to build TOC tree with proper h1 > h2 > h3 hierarchy
+// Helper function to build TOC tree - UPDATED to handle H2-only content
+const buildTocTree = (headings) => {
+  if (!headings || headings.length === 0) return [];
+  
+  const tree = [];
+  const stack = [];
+  
+  headings.forEach((heading) => {
+    const node = { ...heading, children: [] };
     
-    headings.forEach((heading) => {
-      const node = { ...heading, children: [] };
-      
-      while (stack.length > 0 && stack[stack.length - 1].level >= node.level) {
-        stack.pop();
-      }
-      
-      if (stack.length === 0) {
-        tree.push(node);
-      } else {
-        stack[stack.length - 1].children.push(node);
-      }
-      
-      stack.push(node);
-    });
-    
-    return tree;
-  };
-
-  // Scroll to heading
-  const scrollToHeading = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const yOffset = -120;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      
-      window.scrollTo({
-        top: y,
-        behavior: 'smooth'
-      });
-      
-      setActiveId(id);
+    // Pop stack items that are same or higher level
+    while (stack.length > 0 && stack[stack.length - 1].level >= node.level) {
+      stack.pop();
     }
-  };
+    
+    if (stack.length === 0) {
+      // Root level item
+      tree.push(node);
+    } else {
+      // Add as child to parent
+      stack[stack.length - 1].children.push(node);
+    }
+    
+    stack.push(node);
+  });
+  
+  return tree;
+};
 
-  // Recursive render TOC items
-  const renderTocItems = (items, parentIndex = '') => (
-    <ul className="space-y-1 lg:space-y-0.5 xl:space-y-1 2xl:space-y-1.5 pr-1">
+// Recursive render TOC items - UPDATED with better visual hierarchy
+const renderTocItems = (items, parentIndex = '', depth = 0) => {
+  if (!items || items.length === 0) return null;
+  
+  return (
+    <ul className={`space-y-1 lg:space-y-0.5 xl:space-y-1 2xl:space-y-1.5 pr-1 ${
+      depth > 0 
+        ? 'ml-4 lg:ml-3 xl:ml-4 mt-1.5 border-l-2 border-blue-400/30 pl-3 lg:pl-2 xl:pl-3' 
+        : ''
+    }`}>
       {items.map((item, index) => {
         const itemIndex = parentIndex ? `${parentIndex}.${index + 1}` : `${index + 1}`;
+        const hasChildren = item.children && item.children.length > 0;
+        
         return (
-          <li key={item.id}>
+          <li key={item.id} className="relative">
             <button
               onClick={() => scrollToHeading(item.id)}
-              className={`w-full text-left flex items-start gap-1 lg:gap-1 xl:gap-2 p-2 lg:p-1.5 xl:p-2 2xl:p-2.5 text-xs lg:text-xs xl:text-sm leading-snug cursor-pointer transition-all duration-200 rounded-md ${
+              className={`w-full text-left flex items-start gap-1.5 lg:gap-1 xl:gap-1.5 p-2 lg:p-1.5 xl:p-2 2xl:p-2.5 text-xs lg:text-xs xl:text-sm leading-snug cursor-pointer transition-all duration-200 rounded-md ${
                 activeId === item.id
                   ? 'bg-blue-700/60 text-white font-medium shadow-md border border-blue-500/30'
                   : 'bg-slate-800/40 text-blue-100 hover:bg-blue-600/20 hover:text-white border border-blue-400/10 hover:border-blue-400/30'
-              }`}
+              } ${hasChildren && depth === 0 ? 'font-semibold' : ''} ${depth === 0 ? 'text-blue-100' : depth === 1 ? 'text-blue-200/90' : 'text-blue-200/80'}`}
             >
-              <span className={`flex-shrink-0 font-bold text-xs lg:text-xs xl:text-xs ${activeId === item.id ? 'text-white' : 'text-blue-400/70'}`}>
+              <span className={`flex-shrink-0 font-bold text-xs ${
+                activeId === item.id 
+                  ? 'text-white' 
+                  : depth === 0 
+                    ? 'text-blue-300' 
+                    : depth === 1 
+                      ? 'text-blue-400/80' 
+                      : 'text-blue-400/60'
+              }`}>
                 {itemIndex}.
               </span>
-              <span className="flex-1 text-ellipsis line-clamp-2 text-left">
+              <span className={`flex-1 line-clamp-2 text-left ${depth > 0 ? 'text-xs lg:text-xs xl:text-xs' : ''}`}>
                 {item.text}
               </span>
             </button>
-            {item.children.length > 0 && renderTocItems(item.children, itemIndex)}
+            {hasChildren && (
+              <div className="mt-1">
+                {renderTocItems(item.children, itemIndex, depth + 1)}
+              </div>
+            )}
           </li>
         );
       })}
     </ul>
   );
+};
+
 
   // Content processing function to split content at 2nd H2
   const processContentWithCourses = (content) => {
@@ -778,46 +814,46 @@ export default function BlogPost({ params }) {
         <div className="flex">
           
           {/* LEFT: TOC Sidebar - Visible from lg (1024px) with responsive sizing */}
-          {headings.length > 0 && isComponentActive && (
-            <div 
-              ref={tocRef}
-              className="hidden lg:block w-[220px] lg:w-[180px] xl:w-[220px] 2xl:w-[260px] flex-shrink-0 ml-5 lg:ml-2 xl:ml-4 2xl:ml-5 2xl:ml-[max(20px,calc((100vw-1600px)/2-320px))] pt-20 transition-all duration-300 ease-out"
-              style={{
-                position: 'sticky',
-                top: '80px',
-                height: 'fit-content',
-                maxHeight: 'calc(100vh - 100px)',
-                zIndex: 10,
-                transition: 'all 300ms ease-out'
-              }}
-            >
-              <div className="w-full bg-[#072E4F]/95 backdrop-blur-3xl backdrop-saturate-[180%] border-2 border-blue-400/40 rounded-xl shadow-[4px_0_20px_rgba(0,0,0,0.3)] p-3 lg:p-2 xl:p-3 2xl:p-4 text-slate-200 flex flex-col h-[60vh] max-h-[500px]">
-                <div className="flex-shrink-0 mb-2 lg:mb-1 xl:mb-2 2xl:mb-3">
-                  <h3 className="text-sm lg:text-xs xl:text-sm 2xl:text-base font-bold text-white mb-2 lg:mb-1 xl:mb-2 2xl:mb-3 flex items-center justify-center gap-1 lg:gap-1 xl:gap-2 border-b border-blue-400/30 pb-2 lg:pb-1 xl:pb-2 2xl:pb-3">
-                    <List className="w-3 h-3 lg:w-3 lg:h-3 xl:w-4 xl:h-4 text-blue-300" />
-                    <span className="hidden xl:inline">Table of Contents</span>
-                    <span className="xl:hidden">Contents</span>
-                  </h3>
-                </div>
-                
-                <nav className="flex-grow overflow-y-auto pr-1 -mr-1">
-                  {renderTocItems(buildTocTree(headings))}
-                </nav>
-                
-                <div className="flex-shrink-0 mt-1 lg:mt-0.5 xl:mt-1 2xl:mt-2 pt-1 lg:pt-0.5 xl:pt-1 2xl:pt-2 border-t border-blue-400/20">
-                  <div className="text-xs lg:text-xs xl:text-xs 2xl:text-xs text-blue-300/80 flex items-center justify-center gap-1">
-                    <Eye className="w-2 h-2 lg:w-2 lg:h-2 xl:w-3 xl:h-3" />
-                    <span className="hidden xl:inline">{headings.length} sections</span>
-                    <span className="xl:hidden">{headings.length}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+{headings.length > 0 && isComponentActive && (
+  <div 
+    ref={tocRef}
+    className="hidden lg:block w-[220px] lg:w-[180px] xl:w-[220px] 2xl:w-[260px] flex-shrink-0 ml-5 lg:ml-2 xl:ml-4 2xl:ml-5 pt-20 transition-all duration-300 ease-out"
+    style={{
+      position: 'sticky',
+      top: '80px',
+      height: 'fit-content',
+      maxHeight: 'calc(100vh - 100px)',
+      zIndex: 10,
+      transition: 'all 300ms ease-out'
+    }}
+  >
+    <div className="w-full bg-[#072E4F]/95 backdrop-blur-3xl backdrop-saturate-[180%] border-2 border-blue-400/40 rounded-xl shadow-[4px_0_20px_rgba(0,0,0,0.3)] p-3 lg:p-2 xl:p-3 2xl:p-4 text-slate-200 flex flex-col h-[60vh] max-h-[500px]">
+      <div className="flex-shrink-0 mb-2 lg:mb-1 xl:mb-2 2xl:mb-3">
+        <h3 className="text-sm lg:text-xs xl:text-sm 2xl:text-base font-bold text-white mb-2 lg:mb-1 xl:mb-2 2xl:mb-3 flex items-center justify-center gap-1 lg:gap-1 xl:gap-2 border-b border-blue-400/30 pb-2 lg:pb-1 xl:pb-2 2xl:pb-3">
+          <List className="w-3 h-3 lg:w-3 lg:h-3 xl:w-4 xl:h-4 text-blue-300" />
+          <span className="hidden xl:inline">Table of Contents</span>
+          <span className="xl:hidden">Contents</span>
+        </h3>
+      </div>
+      
+      <nav className="flex-grow overflow-y-auto pr-1 -mr-1">
+        {renderTocItems(buildTocTree(headings))}
+      </nav>
+      
+      <div className="flex-shrink-0 mt-1 lg:mt-0.5 xl:mt-1 2xl:mt-2 pt-1 lg:pt-0.5 xl:pt-1 2xl:pt-2 border-t border-blue-400/20">
+        <div className="text-xs lg:text-xs xl:text-xs 2xl:text-xs text-blue-300/80 flex items-center justify-center gap-1">
+          <Eye className="w-2 h-2 lg:w-2 lg:h-2 xl:w-3 xl:h-3" />
+          <span className="hidden xl:inline">{headings.length} sections</span>
+          <span className="xl:hidden">{headings.length}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
           {/* CENTER: Main Content Area - Responsive with adjusted spacing for three columns at 1024px */}
-          <div className="flex-1 bg-[#072E4F] lg:px-0 px-4">
-            
+          <div className="flex-1 bg-[#072E4F] lg:px-0 px-4 relative overflow-x-hidden">
+  
             {/* Floating geometric elements - Responsive */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <div className="absolute top-20 left-4 md:left-20 w-16 h-20 md:w-24 md:h-32 bg-blue-600/20 rounded-lg transform rotate-12 animate-[float_8s_ease-in-out_infinite]"></div>
@@ -936,21 +972,13 @@ export default function BlogPost({ params }) {
                         />
                       )}
                       
-                      {/* Fallback: if no split occurred, show all content normally */}
-                      {!afterCourses && (
-                        <div
-                          className="leading-relaxed blog-content text-white"
-                          dangerouslySetInnerHTML={{ 
-                            __html: blog.content || ''
-                          }}
-                        />
-                      )}
+                      {/* Fallback removed - beforeCourses already contains full content when no split occurs */}
                     </div>
                   );
                 })()}
               </motion.article>
-                
-              {/* Tags Section - Responsive */}
+
+                            {/* Tags Section - Responsive */}
               {blog.tags && blog.tags.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}

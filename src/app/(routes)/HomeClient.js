@@ -73,6 +73,12 @@ const Courses = dynamic(() => import("@/components/HomePage/PopCourses"), {
   loading: () => <div style={{ minHeight: "400px" }} />,
 });
 
+const LatestBlogs = dynamic(() => import("@/components/HomePage/Blogs"),{
+  ssr: false,
+  loading: () => <div style={{ minHeight: "400px "}} />,
+});
+
+
 export default function HomeClient() {
   return (
     <>
@@ -101,6 +107,7 @@ export default function HomeClient() {
 
         <FeedbackAndReviews />
         <DemoCertificate />
+        <LatestBlogs />
         <Branches />
       </main>
     </>

@@ -202,8 +202,9 @@ const TrendingBlogs = () => {
                     title={blog.title}
                     description={blog.description}
                     image={blog.image}
-                    contentClassName="p-5"
-                    imageClassName="h-48"
+                    contentClassName="p-3"
+                    imageClassName="h-40"
+                    className="h-full flex flex-col"
                   />
                 </div>
               </div>
